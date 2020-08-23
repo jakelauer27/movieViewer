@@ -118,7 +118,7 @@ class BrowseMoviesViewModelTest {
 	}
 
 	@Test
-	fun `getPopularMovies-should-request-popular-movies-and-genres`() {
+	fun getPopularMovies_should_request_popular_movies_and_genres() {
 		browseMoviesViewModel = BrowseMoviesViewModel(mockMovieClient)
 
 		val expected = listOf(
@@ -132,7 +132,7 @@ class BrowseMoviesViewModelTest {
 	}
 
 	@Test
-	fun `getPopularMovies-should-request-popular-movies-without-genres-when-adding-additional-movies`() {
+	fun getPopularMovies_should_request_popular_movies_without_genres_when_adding_additional_movies() {
 		browseMoviesViewModel = BrowseMoviesViewModel(mockMovieClient)
 
 		browseMoviesViewModel.loadAdditionalMoviesToEndOfList()
