@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.movieviewer.network.client.ApiClientManager
+import com.example.movieviewer.network.client.MovieDatabaseClient
 import com.example.movieviewer.network.model.GenresResponse
 import com.example.movieviewer.network.model.MovieModel
 import com.example.movieviewer.network.model.MoviesResponse
@@ -12,7 +12,9 @@ import com.example.movieviewer.ui.constants.MoviesRequestStatus
 import kotlinx.coroutines.*
 import java.lang.Exception
 
-class BrowseMoviesViewModel : ViewModel() {
+class BrowseMoviesViewModel(
+	private val movieClient: MovieDatabaseClient
+) : ViewModel() {
 	private lateinit var genres: Map<Long, String>
 
 	private var currentMoviePage = 1L
@@ -51,8 +53,8 @@ class BrowseMoviesViewModel : ViewModel() {
 
 		if (pageIndex <= maxPages) {
 			coroutineScope.launch {
-				val getMoviesDeferred = ApiClientManager.movieClient.getPopularMoviesAsync(pageIndex)
-				val getGenresDeferred = if (getGenres) ApiClientManager.movieClient.getGenresAsync() else null
+				val getMoviesDeferred = movieClient.getPopularMoviesAsync(pageIndex)
+				val getGenresDeferred = if (getGenres) movieClient.getGenresAsync() else null
 
 				try {
 					val moviesResponse = getMoviesDeferred.await()

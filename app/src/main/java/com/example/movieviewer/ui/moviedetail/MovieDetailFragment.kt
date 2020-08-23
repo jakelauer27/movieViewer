@@ -27,18 +27,22 @@ class MovieDetailFragment : Fragment() {
 		viewModel.onCreated(movie!!)
 
 		viewModel.navigateToList.observe(viewLifecycleOwner, Observer {
-			it?.let {
-				val navController = this.findNavController()
-
-				// if you can go back, then go back to preserve where you were on the browse list, otherwise navigate there as normal
-				if (navController.currentDestination != null) {
-					navController.navigateUp()
-				} else {
-					navController.navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToBrowseMoviesFragment6())
-				}
-			}
+			onNavigateToListView(it)
 		})
 
 		return binding.root
+	}
+
+	private fun onNavigateToListView(nav: Boolean?) {
+		nav?.let {
+			val navController = this.findNavController()
+
+			// if you can go back, then go back to preserve where you were on the browse list, otherwise navigate there as normal
+			if (navController.currentDestination != null) {
+				navController.navigateUp()
+			} else {
+				navController.navigate(MovieDetailFragmentDirections.actionMovieDetailFragmentToBrowseMoviesFragment6())
+			}
+		}
 	}
 }

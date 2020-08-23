@@ -10,14 +10,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieviewer.databinding.FragmentBrowseMoviesBinding
+import com.example.movieviewer.network.client.ApiClientManager
+import com.example.movieviewer.network.model.MovieModel
 import com.example.movieviewer.ui.adapters.MovieAdapter
 import com.example.movieviewer.ui.adapters.MovieClickListener
 import com.example.movieviewer.ui.constants.MoviesRequestStatus
+import com.example.movieviewer.ui.moviedetail.MovieDetailViewModel
 
 class BrowseMoviesFragment : Fragment() {
-	private val viewModel: BrowseMoviesViewModel by lazy {
-		ViewModelProvider(this).get(BrowseMoviesViewModel::class.java)
-	}
+	private lateinit var viewModel: BrowseMoviesViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -25,16 +26,11 @@ class BrowseMoviesFragment : Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		val binding = FragmentBrowseMoviesBinding.inflate(layoutInflater)
-
 		val gridLayoutManager = GridLayoutManager(context, 2)
+		val movieGridAdapter = MovieAdapter(MovieClickListener { onNavigateToDetailView(it) })
+		val viewModelFactory = BrowseMoviesViewModelFactory(ApiClientManager.movieClient)
 
-		val movieGridAdapter = MovieAdapter(MovieClickListener { movie ->
-			movie.let {
-				this.findNavController().navigate(
-					BrowseMoviesFragmentDirections.actionBrowseMoviesFragmentToMovieDetailFragment(movie)
-				)
-			}
-		})
+		viewModel = ViewModelProvider(this, viewModelFactory).get(BrowseMoviesViewModel::class.java)
 
 		binding.lifecycleOwner = this
 		binding.viewModel = viewModel
@@ -46,6 +42,13 @@ class BrowseMoviesFragment : Fragment() {
 		return binding.root
 	}
 
+	private fun onNavigateToDetailView(movie: MovieModel) {
+		movie.let {
+			this.findNavController().navigate(
+				BrowseMoviesFragmentDirections.actionBrowseMoviesFragmentToMovieDetailFragment(movie)
+			)
+		}
+	}
 
 	private fun addScrollListenerToMoviesList(
 		binding: FragmentBrowseMoviesBinding,
