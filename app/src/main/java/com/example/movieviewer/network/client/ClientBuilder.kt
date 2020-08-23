@@ -1,4 +1,4 @@
-package com.example.movieviewer.api.client
+package com.example.movieviewer.network.client
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -10,9 +10,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class ClientBuilder<T> {
 	companion object {
 
-		fun <T>buildRetroFitClient(
-      apiClient: Class<T>,
-      baseUrl: String,
+		// TODO: Make this more dynamic -> so apiKey doesn't necessarily have to be a queryParam of "api_key"
+		fun <T> buildRetroFitClient(
+			apiClient: Class<T>,
+			baseUrl: String,
 			apiKey: String? = null
 		): T {
 			val moshi = Moshi.Builder()
@@ -30,7 +31,7 @@ class ClientBuilder<T> {
 				retrofitBuilder.build()
 			}
 
-      return retrofit.create(apiClient)
+			return retrofit.create(apiClient)
 		}
 
 		private fun buildOkHttpClient(apiKey: String): OkHttpClient {

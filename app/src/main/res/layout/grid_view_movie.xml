@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="movie"
+            type="com.example.movieviewer.network.model.MovieModel" />
+
+        <variable
+            name="clickListener"
+            type="com.example.movieviewer.ui.adapters.MovieClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:onClick="@{() -> clickListener.onClick(movie)}">
+
+        <ImageView
+            android:id="@+id/movie_image"
+            android:layout_width="@dimen/grid_image_width"
+            android:layout_height="@dimen/grid_image_height"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@{movie.title}"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:movieImage="@{movie.imageUrl}"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{movie.title}"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/movie_image"
+            app:layout_constraintStart_toStartOf="@+id/movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/movie_image"
+            tools:text="Fight Club" />
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@+id/movie_image"
+            app:layout_constraintStart_toStartOf="@+id/movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title"
+            app:movieRating="@{movie}"
+            tools:text="8.2/10 (345)"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

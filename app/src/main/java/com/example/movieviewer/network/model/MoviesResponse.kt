@@ -1,4 +1,4 @@
-package com.example.movieviewer.api.model
+package com.example.movieviewer.network.model
 
 import com.squareup.moshi.Json
 

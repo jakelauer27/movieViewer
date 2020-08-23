@@ -1,4 +1,4 @@
-package com.example.movieviewer.api.client
+package com.example.movieviewer.network.client
 
 import com.example.movieviewer.BuildConfig
 
