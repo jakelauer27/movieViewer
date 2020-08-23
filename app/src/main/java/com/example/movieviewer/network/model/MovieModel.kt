@@ -18,4 +18,4 @@ data class MovieModel(
 	val genreIds: List<Long>,
 	var genreNames: List<String?> = emptyList(),
 	val overview: String
-): Parcelable
+) : Parcelable

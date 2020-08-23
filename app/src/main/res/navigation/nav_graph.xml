@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph.xml"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
     app:startDestination="@id/browseMoviesFragment">
     <fragment
         android:id="@+id/browseMoviesFragment"
         android:name="com.example.movieviewer.ui.browsemovies.BrowseMoviesFragment"
-        android:label="BrowseMoviesFragment" >
+        android:label="BrowseMoviesFragment">
         <action
             android:id="@+id/action_browseMoviesFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -13,10 +14,10 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.example.movieviewer.ui.moviedetail.MovieDetailFragment"
-        android:label="MovieDetailFragment" >
+        android:label="MovieDetailFragment">
         <argument
             android:name="movie"
-            app:argType="com.example.movieviewer.network.model.MovieModel"/>
+            app:argType="com.example.movieviewer.network.model.MovieModel" />
         <action
             android:id="@+id/action_movieDetailFragment_to_browseMoviesFragment6"
             app:destination="@id/browseMoviesFragment" />

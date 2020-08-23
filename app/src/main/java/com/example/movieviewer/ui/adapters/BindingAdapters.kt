@@ -33,20 +33,15 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 	}
 
 	if (imgUrl == null) {
+		// Just using the Android Icon for Movies with no images
 		imgView.setImageResource(R.drawable.ic_launcher_foreground)
-	}
-}
-
-@BindingAdapter("movieRating")
-fun TextView.bindRating(movie: MovieModel?) {
-	movie?.let {
-		text = context.getString(R.string.movie_rating, decimalFormat.format(movie.userRating), movie.ratingCount)
 	}
 }
 
 @BindingAdapter("moviesRequestStatus")
 fun bindStatus(statusImageView: ImageView, status: MoviesRequestStatus?) {
 	when (status) {
+		// Just using the Android Icon for loading
 		MoviesRequestStatus.LOADING -> {
 			statusImageView.visibility = View.VISIBLE
 			statusImageView.setImageResource(R.drawable.ic_launcher_foreground)
@@ -61,6 +56,13 @@ fun bindStatus(statusImageView: ImageView, status: MoviesRequestStatus?) {
 	}
 }
 
+@BindingAdapter("movieRating")
+fun TextView.bindRating(movie: MovieModel?) {
+	movie?.let {
+		text = context.getString(R.string.movie_rating, decimalFormat.format(movie.userRating), movie.ratingCount)
+	}
+}
+
 @BindingAdapter("movieGenres")
 fun TextView.bindGenres(movieGenres: List<String>?) {
 	movieGenres?.let {
@@ -71,5 +73,12 @@ fun TextView.bindGenres(movieGenres: List<String>?) {
 				"$genresString, $genre"
 			}
 		}
+	}
+}
+
+@BindingAdapter("showGenres")
+fun TextView.bindGenreLabelVisible(movieGenres: List<String>?) {
+	movieGenres?.let {
+		visibility = if (movieGenres.isEmpty()) View.GONE else View.VISIBLE
 	}
 }

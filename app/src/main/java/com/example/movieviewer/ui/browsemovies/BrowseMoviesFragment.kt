@@ -36,8 +36,6 @@ class BrowseMoviesFragment : Fragment() {
 			}
 		})
 
-		// TODO figure out about removing data?
-
 		binding.lifecycleOwner = this
 		binding.viewModel = viewModel
 		binding.moviesGrid.adapter = movieGridAdapter
@@ -60,6 +58,14 @@ class BrowseMoviesFragment : Fragment() {
 
 					if (viewModel.requestStatus.value != MoviesRequestStatus.LOADING) {
 						if (layoutManager.findLastVisibleItemPosition() >= layoutManager.itemCount - 1) {
+							// load more movies to create infinite scroll feel
+
+							/*
+								Not completely sure on what android best practices are for this ->
+								considered removing pages from the beginning of the list after a certain point
+								and reloading them when a user scrolls back up. Could be a good future implementation
+								if reviewer thinks it's necessary
+							 */
 							viewModel.loadAdditionalMoviesToEndOfList()
 						}
 					}

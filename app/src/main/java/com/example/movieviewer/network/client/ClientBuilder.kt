@@ -10,11 +10,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class ClientBuilder<T> {
 	companion object {
 
-		// TODO: Make this more dynamic -> so apiKey doesn't necessarily have to be a queryParam of "api_key"
+		// Future work -> If adding other APIs that require api in params, make this builder handle that
 		fun <T> buildRetroFitClient(
 			apiClient: Class<T>,
 			baseUrl: String,
-			apiKey: String? = null
+			apiQueryParams: Pair<String, String>? = null
 		): T {
 			val moshi = Moshi.Builder()
 				.add(KotlinJsonAdapterFactory())
@@ -25,8 +25,8 @@ class ClientBuilder<T> {
 				.addCallAdapterFactory(CoroutineCallAdapterFactory())
 				.baseUrl(baseUrl)
 
-			val retrofit = if (apiKey != null) {
-				retrofitBuilder.client(buildOkHttpClient(apiKey)).build()
+			val retrofit = if (apiQueryParams != null) {
+				retrofitBuilder.client(buildOkHttpClient(apiQueryParams)).build()
 			} else {
 				retrofitBuilder.build()
 			}
@@ -34,13 +34,13 @@ class ClientBuilder<T> {
 			return retrofit.create(apiClient)
 		}
 
-		private fun buildOkHttpClient(apiKey: String): OkHttpClient {
+		private fun buildOkHttpClient(apiKey: Pair<String, String>): OkHttpClient {
 			return OkHttpClient.Builder()
 				.retryOnConnectionFailure(false)
 				.addInterceptor {
 					val originalRequest = it.request()
 					val updatedUrl = originalRequest.url().newBuilder()
-						.addQueryParameter("api_key", apiKey)
+						.addQueryParameter(apiKey.first, apiKey.second)
 						.build();
 
 					val request = originalRequest.newBuilder()

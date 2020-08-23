@@ -8,12 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieviewer.databinding.GridViewMovieBinding
 import com.example.movieviewer.network.model.MovieModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 
 class MovieAdapter(
 	private val clickListener: MovieClickListener
 ) : ListAdapter<MovieModel, RecyclerView.ViewHolder>(MovieDiffCallback()) {
+
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		return ViewHolder.from(parent)
 	}
@@ -49,9 +48,6 @@ class MovieAdapter(
 }
 
 class MovieDiffCallback : DiffUtil.ItemCallback<MovieModel>() {
-	private val adapterScope = CoroutineScope(Dispatchers.Default)
-
-
 	@SuppressLint("DiffUtilEquals")
 	override fun areContentsTheSame(oldItem: MovieModel, newItem: MovieModel): Boolean {
 		return oldItem == newItem
