@@ -11,3 +11,6 @@
 - Retrofit / Moshi / w/Retrofit Coroutines Adapter
 - Glide
 - Recycler View
+
+## Important Note
+  -Github is showing the spacing for some files as 4/8 space tabbing. In the IDE it is 2 space tabbing. Tried for awhile to get it synced up right, but ultimately recommend viewing the code in an IDE
